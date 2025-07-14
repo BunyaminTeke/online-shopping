@@ -77,7 +77,7 @@ const Navbar = () => {
                     <div className="hidden md:flex items-center space-x-8">
                         <NavLink href="/" text="Ana Sayfa" />
                         <NavLink href="/product" text="Ürünler" />
-                        <NavLink href="/kategoriler" text="Kategoriler" />
+                        <NavLink href="/categories" text="Kategoriler" />
                         <NavLink href="/kampanyalar" text="Kampanyalar" />
                         <NavLink href="/contact" text="İletişim" />
                     </div>

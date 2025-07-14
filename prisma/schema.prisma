@@ -19,6 +19,23 @@ model User {
   orders    Order[]
   favorites Favorite[]
   cart      CartItem[]
+
+  @@map("User")
+}
+
+model Testimonial {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  role    String
+  content String
+  rating  Float
+}
+
+model Category {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String @unique
+  image    String
+  products Int
 }
 
 model PendingUser {

@@ -3,52 +3,47 @@ import React from 'react';
 import Head from 'next/head';
 import Categories from '@/components/Categories';
 
-const HomePage = () => {
+import { PrismaClient } from '@prisma/client';
+import FeaturedProducts from '@/components/FeaturedProducts';
+
+const prisma = new PrismaClient();
+
+async function getCategories() {
+  return await prisma.category.findMany({
+    orderBy: { name: 'asc' },
+  });
+}
+
+const HomePage = async () => {
   // Örnek ürün verileri
-  const featuredProducts = [
-    {
-      id: 1,
-      name: 'Kablosuz Kulaklık Pro',
-      price: 799.99,
-      discountPrice: 599.99,
-      image: '/images/headphone.jpg',
-      rating: 4.8,
-      reviews: 124
-    },
-    {
-      id: 2,
-      name: 'Akıllı Saat Serisi 5',
-      price: 1299.99,
-      discountPrice: 999.99,
-      image: '/images/smartwatch.jpg',
-      rating: 4.7,
-      reviews: 98
-    },
-    {
-      id: 3,
-      name: 'Spor Ayakkabı Ultra',
-      price: 499.99,
-      image: '/images/shoes.jpg',
-      rating: 4.5,
-      reviews: 76
-    },
-    {
-      id: 4,
-      name: 'Laptop Çantası Premium',
-      price: 299.99,
-      image: '/images/bag.jpg',
-      rating: 4.3,
-      reviews: 54
-    }
-  ];
+
 
   // Kategoriler
-  const categories = [
-    { id: 1, name: 'Elektronik', image: '/images/electronics.jpg', products: 243 },
-    { id: 2, name: 'Giyim', image: '/images/clothing.jpg', products: 176 },
-    { id: 3, name: 'Ev & Yaşam', image: '/images/home.jpg', products: 132 },
-    { id: 4, name: 'Spor', image: '/images/sports.jpg', products: 98 }
-  ];
+
+  const categoriesRaw = await getCategories();
+
+  const categories = categoriesRaw
+    .map(cat => ({
+      ...cat,
+      id: typeof cat.id === 'number' ? String(cat.id) : cat.id
+    }))
+    .slice(0, 4);  // ilk 4 kategoriyi al
+
+
+  const rawProducts = await prisma.product.findMany({ take: 4 })
+
+  const featuredProducts = rawProducts.map(p => ({
+    id: p.id,
+    name: p.name,
+    price: p.price,
+    discount: p.discount,
+    final_price: p.final_price,
+    image_url: p.image_url === null ? undefined : p.image_url,
+    rating: p.rating,
+    num_reviews: p.num_reviews,
+  }))
+
+
 
   // Müşteri yorumları
   const testimonials = [
@@ -117,7 +112,7 @@ const HomePage = () => {
         {/* Özellikler */}
         <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="grid text-amber-400 grid-cols-1 md:grid-cols-4 gap-8">
               {[
                 { icon: '🚚', title: 'Hızlı Kargo', desc: 'Siparişleriniz 24 saatte kargoda' },
                 { icon: '💳', title: 'Güvenli Ödeme', desc: '256 bit SSL ile güvenli alışveriş' },
@@ -139,7 +134,10 @@ const HomePage = () => {
         <Categories categories={categories} />
 
         {/* Öne Çıkan Ürünler */}
-        <section className="py-16 bg-gray-50">
+
+        <FeaturedProducts products={featuredProducts} />
+
+        {/* <section className="py-16 bg-gray-50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center mb-12">
               <h2 className="text-3xl text-amber-300 font-bold">Öne Çıkan Ürünler</h2>
@@ -196,7 +194,7 @@ const HomePage = () => {
               ))}
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Kampanya Bölümü */}
         <section className="py-16 bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
