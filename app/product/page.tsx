@@ -171,12 +171,15 @@ export default function ProductsPage() {
                             )}
 
                             {product.image_url ? (
-                                <div className="h-60 flex items-center justify-center p-5 bg-gradient-to-br from-gray-50 to-gray-100">
+                                <div className="h-60 hover:cursor-pointer flex items-center justify-center p-5 bg-gradient-to-br from-gray-50 to-gray-100">
+
                                     <img
+                                        onClick={() => window.location.href = `/product/${product.id}`}
                                         src={product.image_url}
                                         alt={product.name}
                                         className="max-h-full max-w-full object-contain transition-transform duration-500 hover:scale-110"
                                     />
+
                                 </div>
                             ) : (
                                 <div className="h-60 flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 p-5">
@@ -222,10 +225,10 @@ export default function ProductsPage() {
                                     </div>
 
                                     <div className={`text-xs font-medium px-3 py-1.5 rounded-full ${product.stock > 10
-                                            ? "bg-green-100 text-green-800"
-                                            : product.stock > 0
-                                                ? "bg-yellow-100 text-yellow-800"
-                                                : "bg-red-100 text-red-800"
+                                        ? "bg-green-100 text-green-800"
+                                        : product.stock > 0
+                                            ? "bg-yellow-100 text-yellow-800"
+                                            : "bg-red-100 text-red-800"
                                         }`}>
                                         {product.stock > 10 ? "Stokta" : product.stock > 0 ? "Son Ürünler" : "Stok Yok"}
                                     </div>
@@ -258,8 +261,8 @@ export default function ProductsPage() {
                                         <button
                                             onClick={() => addToCart(product.id, product.name)}
                                             className={`w-full flex items-center justify-center py-3 px-4 rounded-lg font-medium text-white transition-all duration-300 shadow-md hover:shadow-lg ${product.stock > 0
-                                                    ? 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700'
-                                                    : 'bg-gray-400 cursor-not-allowed'
+                                                ? 'bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700'
+                                                : 'bg-gray-400 cursor-not-allowed'
                                                 }`}
                                             disabled={product.stock <= 0}
                                         >

@@ -67,8 +67,18 @@ model Product {
   favorites  Favorite[]
   orderItems OrderItem[]
   CartItem   CartItem[]
+  Campaign   Campaign[]
 
   @@map("Product")
+}
+
+model Campaign {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  imageUrl  String
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
 }
 
 model Favorite {
