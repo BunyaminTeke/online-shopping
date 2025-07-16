@@ -16,12 +16,15 @@ interface Product {
     image_url?: string;
 }
 
+type ToastType = "success" | "error";
+
 export default function ProductsPage() {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const [cartItems, setCartItems] = useState<{ [key: string]: number }>({});
     const [showNotification, setShowNotification] = useState(false);
-    const [notificationProduct, setNotificationProduct] = useState("");
+    const [notificationMessage, setNotificationMessage] = useState("");
+    const [notificationType, setNotificationType] = useState<ToastType>("success");
 
     useEffect(() => {
         fetch("/api/products")
@@ -33,24 +36,46 @@ export default function ProductsPage() {
             .catch(() => setLoading(false));
     }, []);
 
-    const addToCart = (productId: string, productName: string) => {
-        setCartItems(prev => {
-            const newCount = (prev[productId] || 0) + 1;
-            return {
-                ...prev,
-                [productId]: newCount
-            };
-        });
-
-        setNotificationProduct(productName);
+    const showToast = (message: string, type: ToastType = "success") => {
+        setNotificationMessage(message);
+        setNotificationType(type);
         setShowNotification(true);
         setTimeout(() => setShowNotification(false), 3000);
     };
 
-    const incrementCart = (productId: string) => {
+    const addToCart = (productId: string, productName: string) => {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+
+        const currentQuantity = cartItems[productId] || 0;
+
+        if (currentQuantity >= product.stock) {
+            showToast(`En fazla ${product.stock} adet ekleyebilirsiniz.`, "error");
+            return;
+        }
+
         setCartItems(prev => ({
             ...prev,
-            [productId]: (prev[productId] || 0) + 1
+            [productId]: currentQuantity + 1
+        }));
+
+        showToast(`${productName} sepete eklendi!`, "success");
+    };
+
+    const incrementCart = (productId: string) => {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+
+        const currentQuantity = cartItems[productId] || 0;
+
+        if (currentQuantity >= product.stock) {
+            showToast(`En fazla ${product.stock} adet ekleyebilirsiniz.`, "error");
+            return;
+        }
+
+        setCartItems(prev => ({
+            ...prev,
+            [productId]: currentQuantity + 1
         }));
     };
 
@@ -138,14 +163,23 @@ export default function ProductsPage() {
             {/* Navbar için boşluk bırakıldı */}
             <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-white to-transparent z-10"></div>
 
-            {/* Sepet Bildirimi */}
+            {/* Toast Bildirimi */}
             {showNotification && (
                 <div className="fixed top-24 right-5 z-50 animate-fadeInOut">
-                    <div className="bg-green-500 text-white px-6 py-4 rounded-xl shadow-xl flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span><strong>{notificationProduct}</strong> sepete eklendi!</span>
+                    <div className={`flex items-center px-6 py-4 rounded-xl shadow-xl text-white ${notificationType === "success"
+                        ? "bg-green-500"
+                        : "bg-red-500"
+                        }`}>
+                        {notificationType === "success" ? (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                        ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 5.636l-1.414-1.414L12 9.172 7.05 4.222 5.636 5.636 10.586 10.586 5.636 15.536l1.414 1.414L12 12.828l4.95 4.95 1.414-1.414-4.95-4.95z" />
+                            </svg>
+                        )}
+                        <span>{notificationMessage}</span>
                     </div>
                 </div>
             )}
