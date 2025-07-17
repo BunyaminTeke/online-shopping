@@ -143,7 +143,7 @@ const Navbar = () => {
                                 <div className="absolute z-50 w-full bg-white border border-gray-200 rounded-xl mt-2 shadow-xl overflow-hidden">
                                     <div className="py-4 px-4 text-center">
                                         <p className="text-gray-500 text-sm">
-                                            "{searchTerm}" ile ilgili sonuç bulunamadı
+                                            {searchTerm} ile ilgili sonuç bulunamadı
                                         </p>
                                     </div>
                                 </div>
@@ -166,7 +166,7 @@ const Navbar = () => {
                                     onMouseLeave={() => setIsAccountDropdownOpen(false)}
                                 >
                                     <div className="p-4 border-b border-gray-100 bg-gray-50">
-                                        <p className="text-sm text-gray-500 text-lg">
+                                        <p className="text-sm text-gray-500">
                                             {isLoggedIn ? 'Hesabınız' : 'Hesabınıza giriş yapın'}
                                         </p>
                                     </div>
@@ -337,7 +337,7 @@ const Navbar = () => {
                                     <div className="absolute z-50 w-full bg-white border border-gray-200 rounded-xl mt-2 shadow-xl overflow-hidden">
                                         <div className="py-4 px-4 text-center">
                                             <p className="text-gray-500 text-sm">
-                                                "{searchTerm}" ile ilgili sonuç bulunamadı
+                                                {searchTerm} ile ilgili sonuç bulunamadı
                                             </p>
                                         </div>
                                     </div>

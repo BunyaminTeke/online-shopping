@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-
+import Link from 'next/link'
 type Category = {
     id: string;
     name: string;
@@ -24,9 +24,9 @@ function Categories({ categories }: { categories: Category[] }) {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center mb-12">
                     <h2 className="text-3xl font-bold">Popüler Kategoriler</h2>
-                    <a href="/categories" className="text-indigo-600 hover:text-indigo-800 font-semibold">
+                    <Link href="/categories" className="text-indigo-600 hover:text-indigo-800 font-semibold">
                         Tüm Kategoriler <span aria-hidden="true">&rarr;</span>
-                    </a>
+                    </Link>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                     {categories.map((category) => (

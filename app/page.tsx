@@ -1,10 +1,12 @@
+/* eslint-disable react/no-unescaped-entities */
 // pages/index.js
 import React from 'react';
 import Head from 'next/head';
 import Categories from '@/components/Categories';
-
+import Comments from '@/components/Comments';
 import { PrismaClient } from '@prisma/client';
 import FeaturedProducts from '@/components/FeaturedProducts';
+import Link from 'next/link';
 
 const prisma = new PrismaClient();
 
@@ -46,29 +48,6 @@ const HomePage = async () => {
 
 
   // Müşteri yorumları
-  const testimonials = [
-    {
-      id: 1,
-      name: 'Ahmet Yılmaz',
-      role: 'Premium Müşteri',
-      content: 'Ürün kalitesi ve kargo hızı beni çok etkiledi. Artık tüm alışverişlerimi buradan yapıyorum.',
-      rating: 5
-    },
-    {
-      id: 2,
-      name: 'Zeynep Kaya',
-      role: 'Sık Alışveriş Yapan',
-      content: 'Müşteri hizmetleri gerçekten çok ilgili. Sorunumu hızlıca çözdüler, kesinlikle tavsiye ederim.',
-      rating: 4.5
-    },
-    {
-      id: 3,
-      name: 'Mehmet Demir',
-      role: 'Yeni Müşteri',
-      content: 'İlk alışverişimde indirim kuponuyla harika bir fiyata ürün aldım. Çok memnun kaldım.',
-      rating: 5
-    }
-  ];
 
   return (
     <>
@@ -91,12 +70,17 @@ const HomePage = async () => {
                   Binlerce kaliteli ürünü uygun fiyatlarla bulabileceğiniz adres. Hemen alışverişe başlayın!
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  <button className="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 px-8 rounded-lg text-lg transition">
-                    Alışverişe Başla
-                  </button>
-                  <button className="bg-transparent border-2 border-white hover:bg-white/10 font-bold py-3 px-8 rounded-lg text-lg transition">
-                    Kampanyaları İncele
-                  </button>
+
+                  <Link href="/product">
+                    <button className="bg-yellow-400 hover:bg-yellow-500 text-blue-900 font-bold py-3 px-8 rounded-lg text-lg transition">
+                      Alışverişe Başla
+                    </button>
+                  </Link>
+                  <Link href="/campaigns">
+                    <button className="bg-transparent border-2 border-white hover:bg-white/10 font-bold py-3 px-8 rounded-lg text-lg transition">
+                      Kampanyaları İncele
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div className="flex justify-center">
@@ -241,38 +225,7 @@ const HomePage = async () => {
           </div>
         </section>
 
-        {/* Müşteri Yorumları */}
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-16">Müşterilerimiz Ne Diyor?</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {testimonials.map((testimonial) => (
-                <div key={testimonial.id} className="bg-white p-8 rounded-xl shadow-md relative">
-                  <div className="absolute top-0 left-8 -translate-y-1/2 bg-indigo-600 text-white p-3 rounded-full">
-                    <span className="text-2xl">❝</span>
-                  </div>
-                  <div className="flex items-center mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <span key={i} className={`text-xl ${i < Math.floor(testimonial.rating) ? 'text-yellow-400' : 'text-gray-300'}`}>
-                        ★
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-gray-600 mb-6 italic">
-                    "{testimonial.content}"
-                  </p>
-                  <div className="flex items-center">
-                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16" />
-                    <div className="ml-4">
-                      <h4 className="font-bold">{testimonial.name}</h4>
-                      <p className="text-gray-500">{testimonial.role}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <Comments />
 
         {/* Haber Bülteni */}
         <section className="py-16 bg-gray-50">

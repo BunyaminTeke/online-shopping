@@ -87,22 +87,22 @@ const Footer = () => {
                             </li>
                             <li className="flex items-center">
                                 <span className="mr-2">📞</span>
-                                <span>+90 507 969 93 13</span>
+                                <span>+90 536 888 85 43</span>
                             </li>
                             <li className="flex items-center">
                                 <span className="mr-2">✉️</span>
-                                <span>emreemreemre06@gmail.com</span>
+                                <span>emre.emre.emre36@hotmail.com</span>
                             </li>
                             <li className="flex items-center">
                                 <span className="mr-2">⏰</span>
-                                <span>Pazartesi - Cumartesi: 09:00 - 18:00</span>
+                                <span>Pazartesi - Cuma: 09:00 - 18:00</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-                    <p>© {new Date().getFullYear()} Bünyamin-Emre. Tüm hakları saklıdır.</p>
+                    <p>© {new Date().getFullYear()} Emre Uludağ. Tüm hakları saklıdır.</p>
                 </div>
             </div>
         </footer>
