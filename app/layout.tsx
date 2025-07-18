@@ -40,8 +40,9 @@ export default function RootLayout({ children, params }: RootLayoutProps) {
       <body suppressHydrationWarning className="page-layout">
         <ConditionalNavbar />
         <main className="main-content" key={params?.slug || 'default'}>
-          {children}
-
+          <>
+            {children}
+          </>
         </main>
         <ConditionalFooter />
       </body>

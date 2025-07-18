@@ -31,9 +31,9 @@ export default function ProductsPage() {
     const [notificationMessage, setNotificationMessage] = useState("");
     const [notificationType, setNotificationType] = useState<ToastType>("success");
 
-    /* ------------------------------------------------------------------ */
-    /* 1) Sayfa ilk yüklendiğinde localStorage'dan sepeti çek              */
-    /* ------------------------------------------------------------------ */
+
+
+
     useEffect(() => {
         const storedCart = localStorage.getItem("cartItems");
         if (storedCart) {
@@ -45,16 +45,13 @@ export default function ProductsPage() {
         }
     }, []);
 
-    /* ------------------------------------------------------------------ */
-    /* 2) cartItems değiştikçe localStorage'a geri yaz                     */
-    /* ------------------------------------------------------------------ */
+
     useEffect(() => {
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }, [cartItems]);
 
-    /* ------------------------------------------------------------------ */
-    /* 3) Ürünleri API'den çek                                             */
-    /* ------------------------------------------------------------------ */
+
+
     useEffect(() => {
         fetch("/api/products")
             .then((res) => res.json())
@@ -65,9 +62,6 @@ export default function ProductsPage() {
             .catch(() => setLoading(false));
     }, []);
 
-    /* ------------------------------------------------------------------ */
-    /* 4) Yardımcı fonksiyonlar                                            */
-    /* ------------------------------------------------------------------ */
 
     const showToast = (message: string, type: ToastType = "success") => {
         setNotificationMessage(message);
@@ -133,9 +127,7 @@ export default function ProductsPage() {
         localStorage.removeItem("cartItems");
     };
 
-    /* ------------------------------------------------------------------ */
-    /* 5) Yardımcı UI: Yıldız puanı                                        */
-    /* ------------------------------------------------------------------ */
+
     const renderStars = (rating: number) =>
         Array(5)
             .fill(0)
@@ -151,10 +143,7 @@ export default function ProductsPage() {
                 </svg>
             ));
 
-    /* ------------------------------------------------------------------ */
-    /* 6) Render                                                          */
-    /* ------------------------------------------------------------------ */
-    /* 6.1) Yükleniyor Skeleton'ı */
+
     if (loading) {
         return (
             <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-12">
