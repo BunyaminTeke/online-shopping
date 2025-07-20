@@ -6,6 +6,7 @@ import "./globals.css";
 import ConditionalNavbar from "@/components/ConditionalNavbar";
 import ConditionalFooter from "@/components/ConditionalFooter";
 
+import { CartProvider } from '@/app/context/CartContext';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,24 +31,16 @@ interface RootLayoutProps {
 export default function RootLayout({ children, params }: RootLayoutProps) {
   return (
     <html lang="tr">
-      {/* <body>
-        <ConditionalNavbar />
-        <main key={params?.slug || 'default'}>{children}</main>
-        <ConditionalFooter />
-      </body> */}
-
-
       <body suppressHydrationWarning className="page-layout">
-        <ConditionalNavbar />
-        <main className="main-content" key={params?.slug || 'default'}>
-          <>
+        <CartProvider>
+          <ConditionalNavbar />
+          <main className="main-content" key={params?.slug || 'default'}>
             {children}
-          </>
-        </main>
-        <ConditionalFooter />
+          </main>
+          <ConditionalFooter />
+        </CartProvider>
       </body>
-
-
     </html>
-  )
+  );
 }
+

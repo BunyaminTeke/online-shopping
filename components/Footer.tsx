@@ -41,13 +41,13 @@ const Footer = () => {
                                 <Link href="/" className="text-gray-400 hover:text-white">Ana Sayfa</Link>
                             </li>
                             <li>
-                                <Link href="/urunler" className="text-gray-400 hover:text-white">Ürünler</Link>
+                                <Link href="/product" className="text-gray-400 hover:text-white">Ürünler</Link>
                             </li>
                             <li>
-                                <Link href="/kategoriler" className="text-gray-400 hover:text-white">Kategoriler</Link>
+                                <Link href="/categories" className="text-gray-400 hover:text-white">Kategoriler</Link>
                             </li>
                             <li>
-                                <Link href="/kampanyalar" className="text-gray-400 hover:text-white">Kampanyalar</Link>
+                                <Link href="/campaigns" className="text-gray-400 hover:text-white">Kampanyalar</Link>
                             </li>
                             <li>
                                 <Link href="/contact" className="text-gray-400 hover:text-white">İletişim</Link>

@@ -14,15 +14,13 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
     const resolvedParams = await params;
     const slug = resolvedParams.slug;
 
+    console.log("Category slug:", capitalize(slug));
 
     const products = await prisma.product.findMany({
         where: {
             category: capitalize(slug),
         },
     });
-
-    // devamı...
-
 
 
     if (!products || products.length === 0) {

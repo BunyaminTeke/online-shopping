@@ -88,6 +88,8 @@ model Favorite {
   product   Product  @relation(fields: [productId], references: [id])
   productId String   @db.ObjectId
   createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
 }
 
 model Order {

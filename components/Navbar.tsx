@@ -5,6 +5,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { FiSearch, FiShoppingCart, FiUser, FiHeart, FiMenu, FiX, FiLogIn, FiUserPlus, FiPackage } from 'react-icons/fi';
 
+import { useCart } from '@/app/context/CartContext';
+
+import { useRouter } from 'next/navigation';
+
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
@@ -45,17 +49,31 @@ const Navbar = () => {
     }, []);
 
     // localStorage'dan token kontrolü => login durumu güncelle
+
     useEffect(() => {
         setIsLoggedIn(!!localStorage.getItem('token'));
     }, []);
 
     // Çıkış yapma fonksiyonu
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        setIsLoggedIn(false);
-        setIsAccountDropdownOpen(false);
-        window.location.href = '/';
-    };
+    // const handleLogout = () => {
+    //     localStorage.removeItem('token');
+    //     setIsLoggedIn(false);
+    //     setIsAccountDropdownOpen(false);
+    //     window.location.href = '/';
+    // };
+
+    const { cart } = useCart();
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    const router = useRouter();
+
+    async function logout() {
+        await fetch('/api/logout', { method: 'POST' });
+        router.push('/'); // çıkış sonrası login sayfasına yönlendir
+        localStorage.removeItem('token'); // token'ı temizle
+        setIsLoggedIn(false); // login durumunu güncelle
+    }
+
 
     // Mobil menüyü kapatma
     const closeMobileMenu = () => setIsOpen(false);
@@ -207,7 +225,8 @@ const Navbar = () => {
                                     {/* Giriş yapıldıysa */}
                                     {isLoggedIn && (
                                         <button
-                                            onClick={handleLogout}
+                                            // onClick={handleLogout}
+                                            onClick={logout}
                                             className="w-full text-left px-4 py-3 text-white bg-red-600 hover:bg-red-700 transition-all duration-200"
                                         >
                                             Çıkış Yap
@@ -245,9 +264,11 @@ const Navbar = () => {
                             }}
                         >
                             <FiShoppingCart size={20} />
-                            <span className="absolute -top-1 -right-1 bg-green-600 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs">
-                                3
-                            </span>
+                            {totalItems > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-green-600 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs">
+                                    {totalItems}
+                                </span>
+                            )}
                         </Link>
 
                         {/* Mobil Menü Butonu */}

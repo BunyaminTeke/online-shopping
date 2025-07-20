@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import AddToCartButton from '@/components/AddToCartButton';
 
 interface Product {
     id: string;
@@ -15,6 +16,7 @@ interface Product {
     rating: number;
     num_reviews: number;
     image_url?: string;
+    description?: string;
 }
 
 type ToastType = "success" | "error";
@@ -70,11 +72,8 @@ export default function ProductsPage() {
         setTimeout(() => setShowNotification(false), 3000);
     };
 
-    const addToCart = (productId: string, productName: string) => {
-        const product = products.find((p) => p.id === productId);
-        if (!product) return;
-
-        const currentQuantity = cartItems[productId] || 0;
+    const addToCart = (product: Product) => {
+        const currentQuantity = cartItems[product.id] || 0;
 
         if (currentQuantity >= product.stock) {
             showToast(`En fazla ${product.stock} adet ekleyebilirsiniz.`, "error");
@@ -83,11 +82,14 @@ export default function ProductsPage() {
 
         setCartItems((prev) => ({
             ...prev,
-            [productId]: currentQuantity + 1,
+            [product.id]: currentQuantity + 1,
         }));
 
-        showToast(`${productName} sepete eklendi!`, "success");
+        // Sepet Context vs için ek bilgi gönderilecek ise burada yapabilirsin
+        showToast(`${product.name} sepete eklendi!`, "success");
     };
+
+
 
     const incrementCart = (productId: string) => {
         const product = products.find((p) => p.id === productId);
@@ -428,30 +430,44 @@ export default function ProductsPage() {
                                         </div>
                                     ) : (
                                         /* Sepete Ekle */
-                                        <button
-                                            onClick={() => addToCart(product.id, product.name)}
-                                            className={`w-full flex items-center justify-center py-3 px-4 rounded-lg font-medium text-white transition-all duration-300 shadow-md hover:shadow-lg ${product.stock > 0
-                                                ? "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
-                                                : "bg-gray-400 cursor-not-allowed"
-                                                }`}
-                                            disabled={product.stock <= 0}
-                                        >
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-5 w-5 mr-2"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth="2"
-                                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                                                />
-                                            </svg>
-                                            {product.stock > 0 ? "Sepete Ekle" : "Stokta Yok"}
-                                        </button>
+                                        // <button
+                                        //     onClick={() => addToCart(product)}
+                                        //     className={`w-full flex items-center justify-center py-3 px-4 rounded-lg font-medium text-white transition-all duration-300 shadow-md hover:shadow-lg ${product.stock > 0
+                                        //         ? "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
+                                        //         : "bg-gray-400 cursor-not-allowed"
+                                        //         }`}
+                                        //     disabled={product.stock <= 0}
+                                        // >
+                                        //     <svg
+                                        //         xmlns="http://www.w3.org/2000/svg"
+                                        //         className="h-5 w-5 mr-2"
+                                        //         fill="none"
+                                        //         viewBox="0 0 24 24"
+                                        //         stroke="currentColor"
+                                        //     >
+                                        //         <path
+                                        //             strokeLinecap="round"
+                                        //             strokeLinejoin="round"
+                                        //             strokeWidth="2"
+                                        //             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                                        //         />
+                                        //     </svg>
+                                        //     {product.stock > 0 ? "Sepete Ekle" : "Stokta Yok"}
+                                        // </button>
+
+
+                                        <AddToCartButton
+                                            product={{
+                                                id: product.id,
+                                                name: product.name,
+                                                price: product.price,
+                                                image_url: product.image_url || '', // veya hiç yazmayabilirsin çünkü opsiyonel
+                                                discount: product.discount,         // varsa ver, yoksa yazmasan da olur
+                                                description: product.description,   // varsa ver, yoksa yazmasan da olur
+                                            }}
+                                        />
+
+
                                     )}
                                 </div>
                             </div>
