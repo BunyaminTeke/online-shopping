@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🛒 Full-Stack E-Ticaret Uygulaması – TRT Staj Projesi
+Bu proje, TRT Bilgi İşlem Dairesi Başkanlığı bünyesinde 2024 Yaz Dönemi stajı kapsamında geliştirilmiş full-stack bir e-ticaret web uygulamasıdır. Projenin temel amacı, modern web teknolojilerini kullanarak veritabanı entegrasyonu, kullanıcı doğrulama, arayüz tasarımı ve API yönetimini gerçek bir senaryo üzerinde uygulamaktır.
 
-## Getting Started
 
-First, run the development server:
+📌 Proje Özeti
+✅ Front-end: Next.js + Tailwind CSS
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+✅ Back-end: Next.js API Routes + Prisma ORM
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+✅ Veritabanı: MongoDB (Replica Set yapılandırmasıyla)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Özellikler:
+Kullanıcı kayıt ve e-posta doğrulama sistemi
 
-## Learn More
+Ürün listeleme ve detay sayfası (SSR destekli)
 
-To learn more about Next.js, take a look at the following resources:
+Responsive tasarım (mobil/masaüstü uyumlu)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Versiyon kontrolü: Git + GitHub
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+⚙️ Kullanılan Teknolojiler
+Teknoloji	Açıklama
+Next.js	React tabanlı modern web uygulama framework’ü
+MongoDB	Belge tabanlı NoSQL veritabanı
+Prisma ORM	TypeScript destekli açık kaynak ORM çözümü
+Tailwind CSS	Utility-first CSS framework
+Postman	API test ve kontrol aracı
+VS Code	Geliştirme ortamı
+Git/GitHub	Versiyon kontrol sistemi
 
-## Deploy on Vercel
+🚀 Proje Özellikleri
+🔐 Kullanıcı Doğrulama
+Kullanıcı adı, e-posta ve şifre ile kayıt
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+E-posta adresine 6 haneli doğrulama kodu gönderimi
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Kod doğrulaması sonrası kullanıcı aktif edilir
+
+🛍️ Ürün Listeleme
+Ürün verileri FakeStoreAPI üzerinden sunucu tarafında çekilir
+
+SSR (Server Side Rendering) ile SEO uyumlu dinamik sayfa
+
+
+Tailwind CSS ile responsive ürün kartları
+
+
+📡 API Geliştirme
+/api/send-verification, /api/register gibi endpoint’ler oluşturulmuştur
+
+API'ler üzerinden kullanıcı işlemleri MongoDB üzerinde gerçekleştirilir
+
+
+SSR destekli ürün listeleme sayfası
+
+
+
+ 
+📚 Kaynaklar
+Next.js Docs
+MongoDB Docs
+Prisma ORM Docs
+Tailwind CSS Docs
+Fake Store API
+GitHub Docs
+
+
+👨‍💻 Staj Bilgisi
+Kurum: TRT Bilgi İşlem Dairesi Başkanlığı
+
+Staj Dönemi: Yaz 2024
+
+Stajyer: Bünyamin Teke, Emre Uludağ
+
+Proje Sunumu: Local ortamda test edilmiş ve birim yöneticilerine başarıyla sunulmuştur.
