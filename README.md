@@ -1,3 +1,12 @@
+<img width="1847" height="882" alt="image" src="https://github.com/user-attachments/assets/86b6ce28-f01c-4566-a0b4-7d3fc35c35d6" />
+<img width="1832" height="608" alt="image" src="https://github.com/user-attachments/assets/28f7291f-f759-414f-97f7-d1f270e8564f" />
+<img width="1847" height="887" alt="image" src="https://github.com/user-attachments/assets/3b594e7d-e6bc-4ca9-9328-818f21ebcbbf" />
+<img width="1846" height="880" alt="image" src="https://github.com/user-attachments/assets/8b399346-3d6c-4420-976f-7eaa5e8e3f9a" />
+<img width="1852" height="878" alt="image" src="https://github.com/user-attachments/assets/695d7519-3183-40f6-a583-48cf047663ad" />
+<img width="1850" height="812" alt="image" src="https://github.com/user-attachments/assets/79994aaa-7f9b-4cfe-90ff-d2225517ea15" />
+<img width="1848" height="875" alt="image" src="https://github.com/user-attachments/assets/b477d4db-a860-4bf0-bf40-f04e12640648" />
+<img width="1846" height="882" alt="image" src="https://github.com/user-attachments/assets/5d8373e5-7a3d-4946-92a6-1b8501d5a49b" />
+<img width="1850" height="881" alt="image" src="https://github.com/user-attachments/assets/dc6f13cc-362f-40fc-84b0-55399018c51b" />
 
 -EN-
 🛒 Full-Stack E-Commerce Application – TRT Internship Project
