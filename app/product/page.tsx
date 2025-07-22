@@ -17,6 +17,7 @@ interface Product {
     num_reviews: number;
     image_url?: string;
     description?: string;
+
 }
 
 type ToastType = "success" | "error";
@@ -72,22 +73,6 @@ export default function ProductsPage() {
         setTimeout(() => setShowNotification(false), 3000);
     };
 
-    const addToCart = (product: Product) => {
-        const currentQuantity = cartItems[product.id] || 0;
-
-        if (currentQuantity >= product.stock) {
-            showToast(`En fazla ${product.stock} adet ekleyebilirsiniz.`, "error");
-            return;
-        }
-
-        setCartItems((prev) => ({
-            ...prev,
-            [product.id]: currentQuantity + 1,
-        }));
-
-        // Sepet Context vs için ek bilgi gönderilecek ise burada yapabilirsin
-        showToast(`${product.name} sepete eklendi!`, "success");
-    };
 
 
 
@@ -123,11 +108,7 @@ export default function ProductsPage() {
         });
     };
 
-    /* (isteğe bağlı) Sepeti tamamen temizle */
-    const clearCart = () => {
-        setCartItems({});
-        localStorage.removeItem("cartItems");
-    };
+
 
 
     const renderStars = (rating: number) =>
@@ -429,32 +410,6 @@ export default function ProductsPage() {
                                             </button>
                                         </div>
                                     ) : (
-                                        /* Sepete Ekle */
-                                        // <button
-                                        //     onClick={() => addToCart(product)}
-                                        //     className={`w-full flex items-center justify-center py-3 px-4 rounded-lg font-medium text-white transition-all duration-300 shadow-md hover:shadow-lg ${product.stock > 0
-                                        //         ? "bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700"
-                                        //         : "bg-gray-400 cursor-not-allowed"
-                                        //         }`}
-                                        //     disabled={product.stock <= 0}
-                                        // >
-                                        //     <svg
-                                        //         xmlns="http://www.w3.org/2000/svg"
-                                        //         className="h-5 w-5 mr-2"
-                                        //         fill="none"
-                                        //         viewBox="0 0 24 24"
-                                        //         stroke="currentColor"
-                                        //     >
-                                        //         <path
-                                        //             strokeLinecap="round"
-                                        //             strokeLinejoin="round"
-                                        //             strokeWidth="2"
-                                        //             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                                        //         />
-                                        //     </svg>
-                                        //     {product.stock > 0 ? "Sepete Ekle" : "Stokta Yok"}
-                                        // </button>
-
 
                                         <AddToCartButton
                                             product={{
@@ -464,6 +419,7 @@ export default function ProductsPage() {
                                                 image_url: product.image_url || '', // veya hiç yazmayabilirsin çünkü opsiyonel
                                                 discount: product.discount,         // varsa ver, yoksa yazmasan da olur
                                                 description: product.description,   // varsa ver, yoksa yazmasan da olur
+                                                stock: product.stock,               // zorunlu alan eklendi
                                             }}
                                         />
 
@@ -476,52 +432,16 @@ export default function ProductsPage() {
                 ))}
             </div>
 
-            {/* Sepet Özeti (sağ altta) */}
-            <div className="fixed bottom-5 right-5 z-40 bg-white rounded-2xl shadow-2xl p-4 border border-gray-200 transform transition-transform hover:scale-105">
-                <div className="flex items-center">
-                    <div className="relative">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-8 w-8 text-blue-600"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                            />
-                        </svg>
-                        {Object.keys(cartItems).length > 0 && (
-                            <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
-                                {Object.values(cartItems).reduce((sum, count) => sum + count, 0)}
-                            </span>
-                        )}
-                    </div>
-                    <div className="ml-3 mr-2">
-                        <p className="font-bold text-gray-800">Sepetiniz</p>
-                        <p className="text-sm text-gray-600">
-                            {Object.keys(cartItems).length} ürün
-                        </p>
-                    </div>
 
-                    {/* (Opsiyonel) Sepeti temizle */}
-                    {Object.keys(cartItems).length > 0 && (
-                        <button
-                            onClick={clearCart}
-                            className="text-sm text-red-600 underline mr-3"
-                        >
-                            Temizle
-                        </button>
-                    )}
 
-                    <button className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-blue-600 hover:to-indigo-700 transition-all">
-                        Sepete Git
-                    </button>
-                </div>
-            </div>
+
+
+
+            <button className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-blue-600 hover:to-indigo-700 transition-all">
+                Sepete Git
+            </button>
         </div>
+
+
     );
 }

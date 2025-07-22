@@ -63,7 +63,7 @@ const Navbar = () => {
     // };
 
     const { cart } = useCart();
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const totalItems = Object.values(cart || {}).reduce((sum, item) => sum + item.quantity, 0);
 
     const router = useRouter();
 
@@ -102,9 +102,14 @@ const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center">
                     {/* Logo */}
-                    <div className="flex-shrink-0 flex items-center">
-                        <Link href="/" className="text-2xl font-bold text-indigo-600">
-                            MağazaAdı
+                    <div className="flex-shrink-0">
+                        <Link href="/" className="group flex items-center space-x-2">
+
+
+                            {/* Text with gradient and hover effect */}
+                            <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent group-hover:from-indigo-700 group-hover:to-purple-700 transition-all">
+                                UluTek
+                            </span>
                         </Link>
                     </div>
 

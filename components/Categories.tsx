@@ -24,7 +24,7 @@ function Categories({ categories }: { categories: Category[] }) {
         <section className="py-16">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center mb-12">
-                    <h2 className="text-3xl font-bold">Popüler Kategoriler</h2>
+                    <h2 className="text-3xl text-amber-300 font-bold">Popüler Kategoriler</h2>
                     <Link href="/categories" className="text-indigo-600 hover:text-indigo-800 font-semibold">
                         Tüm Kategoriler <span aria-hidden="true">&rarr;</span>
                     </Link>

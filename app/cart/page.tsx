@@ -1,11 +1,19 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import { useCart } from '@/app/context/CartContext';
 import Image from 'next/image';
 import { FiTrash2, FiShoppingBag, FiArrowLeft, FiPlus, FiMinus } from 'react-icons/fi';
 
 export default function CartPage() {
     const { cart, removeFromCart, clearCart, updateQuantity } = useCart();
+    type Recommendation = {
+        id: string | number;
+        name: string;
+        price: number;
+        image_url?: string;
+    };
+    const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
 
     const totalPrice = cart.reduce((sum, item) => {
         const discountedPrice = item.discount
@@ -20,10 +28,37 @@ export default function CartPage() {
         }
     };
 
+    useEffect(() => {
+        const fetchRecommendations = async () => {
+            if (cart.length === 0) {
+                setRecommendations([]);
+                return;
+            }
+
+            const productId = cart[0].productId;
+
+            try {
+                const res = await fetch(`/api/recommendations?id=${productId}`);
+                const data = await res.json();
+
+                if (Array.isArray(data)) {
+                    setRecommendations(data);
+                } else {
+                    setRecommendations([]);
+                }
+            } catch (error) {
+                console.error('Önerilen ürünler çekilemedi:', error);
+                setRecommendations([]);
+            }
+        };
+
+        fetchRecommendations();
+    }, [cart]);
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-8">
             <div className="max-w-4xl mx-auto px-4">
-                {/* Başlık kısmında daha fazla padding-top eklendi */}
+                {/* Başlık */}
                 <div className="flex flex-col items-center mb-10 pt-16">
                     <h1 className="text-4xl font-bold text-gray-900 mb-3 flex items-center">
                         <FiShoppingBag className="mr-3 text-indigo-600" />
@@ -44,13 +79,15 @@ export default function CartPage() {
                             </p>
                             <button
                                 onClick={() => window.location.href = '/product'}
-                                className="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-8 rounded-lg transition-colors flex items-center mx-auto">
+                                className="mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-8 rounded-lg transition-colors flex items-center mx-auto"
+                            >
                                 <FiArrowLeft className="mr-2" />
                                 Alışverişe Devam Et
                             </button>
                         </div>
                     ) : (
                         <>
+                            {/* Sepetteki ürünler */}
                             <div className="divide-y divide-gray-100">
                                 {cart.map((item, index) => {
                                     const discountedPrice = item.discount
@@ -128,6 +165,7 @@ export default function CartPage() {
                                 })}
                             </div>
 
+                            {/* Toplam tutar ve işlemler */}
                             <div className="p-6 bg-gradient-to-r from-indigo-50 to-purple-50 border-t border-gray-100">
                                 <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                                     <div className="mb-6 md:mb-0">
@@ -154,29 +192,44 @@ export default function CartPage() {
                     )}
                 </div>
 
+                {/* Önerilen ürünler */}
                 {cart.length > 0 && (
                     <div className="mt-8 bg-white rounded-2xl shadow-lg p-6">
-                        <h3 className="font-bold text-xl text-gray-900 mb-5">Bu Ürünler İlginizi Çekebilir</h3>
+                        <h3 className="font-bold text-xl text-gray-900 mb-5">Diğer Kullanıcılar Bu Ürünlerle Birlikte Aldı!</h3>
                         <div className="flex overflow-x-auto pb-4 -mx-1 scrollbar-hide">
-                            {[1, 2, 3, 4].map((item) => (
-                                <div key={item} className="flex-shrink-0 w-56 mx-3 bg-gray-50 rounded-xl p-4 border border-gray-200 hover:shadow-md transition-shadow">
-                                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-40 mb-3 flex items-center justify-center">
-                                        <FiShoppingBag className="text-gray-400 text-3xl" />
+                            {recommendations.length > 0 ? (
+                                recommendations.map((item) => (
+                                    <div
+                                        key={item.id}
+                                        className="flex-shrink-0 w-56 mx-3 bg-gray-50 rounded-xl p-4 border border-gray-200 hover:shadow-md transition-shadow"
+                                    >
+                                        <div className="bg-gray-200 rounded-xl w-full h-40 mb-3 overflow-hidden">
+                                            {item.image_url && (
+                                                <Image
+                                                    src={item.image_url}
+                                                    alt={item.name}
+                                                    width={200}
+                                                    height={160}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            )}
+                                        </div>
+                                        <p className="text-base font-semibold text-gray-900 truncate">{item.name}</p>
+                                        <div className="flex items-center mt-2">
+                                            <p className="text-lg font-bold text-indigo-700">{item.price}₺</p>
+                                        </div>
+                                        <button className="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg transition-colors">
+                                            Sepete Ekle
+                                        </button>
                                     </div>
-                                    <p className="text-base font-semibold text-gray-900 truncate">Önerilen Ürün {item}</p>
-                                    <div className="flex items-center mt-2">
-                                        <p className="text-lg font-bold text-indigo-700">129.99₺</p>
-                                        <p className="text-sm text-gray-500 line-through ml-2">149.99₺</p>
-                                    </div>
-                                    <button className="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg transition-colors">
-                                        Sepete Ekle
-                                    </button>
-                                </div>
-                            ))}
+                                ))
+                            ) : (
+                                <p>Önerilen ürün bulunamadı.</p>
+                            )}
                         </div>
                     </div>
                 )}
             </div>
-        </div >
+        </div>
     );
 }

@@ -121,64 +121,7 @@ const HomePage = async () => {
 
         <FeaturedProducts products={featuredProducts} />
 
-        {/* <section className="py-16 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center mb-12">
-              <h2 className="text-3xl text-amber-300 font-bold">Öne Çıkan Ürünler</h2>
-              <button className="text-indigo-600 hover:text-indigo-800 font-semibold">
-                Tüm Ürünler <span aria-hidden="true">&rarr;</span>
-              </button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {featuredProducts.map((product) => (
-                <div key={product.id} className="bg-white rounded-xl shadow-md overflow-hidden group">
-                  <div className="relative">
-                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-56" />
-                    {product.discountPrice && (
-                      <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-lg font-bold">
-                        %{Math.round((1 - product.discountPrice / product.price) * 100)} İNDİRİM
-                      </div>
-                    )}
-                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button className="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 mx-1">
-                        ❤️
-                      </button>
-                      <button className="bg-white p-2 rounded-full shadow-md hover:bg-gray-100 mx-1">
-                        🔍
-                      </button>
-                    </div>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-bold text-lg mb-1 group-hover:text-indigo-600 transition">{product.name}</h3>
-                    <div className="flex items-center mb-3">
-                      {[...Array(5)].map((_, i) => (
-                        <span key={i} className={`text-xl ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}>
-                          ★
-                        </span>
-                      ))}
-                      <span className="text-gray-500 text-sm ml-2">({product.reviews})</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        {product.discountPrice ? (
-                          <>
-                            <span className="text-xl font-bold text-indigo-600">{product.discountPrice.toFixed(2)} TL</span>
-                            <span className="line-through text-gray-500 ml-2">{product.price.toFixed(2)} TL</span>
-                          </>
-                        ) : (
-                          <span className="text-xl font-bold text-indigo-600">{product.price.toFixed(2)} TL</span>
-                        )}
-                      </div>
-                      <button className="bg-indigo-100 text-indigo-700 hover:bg-indigo-200 py-1 px-3 rounded-md text-sm font-medium transition">
-                        Sepete Ekle
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section> */}
+
 
         {/* Kampanya Bölümü */}
         <section className="py-16 bg-gradient-to-r from-indigo-500 to-purple-600 text-white">

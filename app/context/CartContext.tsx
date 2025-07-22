@@ -11,6 +11,8 @@ interface CartItem {
     image?: string;
     discount?: number;
     description?: string;
+    category: string;
+
 }
 
 interface CartContextType {
